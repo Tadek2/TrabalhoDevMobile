@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:math';
+
+import 'filmeEminem.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +23,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String currentImageUrl = '';
   bool isBookmarked = false;
+
+  List<String> imageUrls = [
+    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
+    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
+    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
+    'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
+    // Adicione mais URLs conforme necessário
+  ];
+
+  String getRandomImageUrl() {
+    // Gere um índice aleatório com base no comprimento da lista de URLs
+    int randomIndex = Random().nextInt(imageUrls.length);
+    // Retorne a URL da imagem correspondente ao índice gerado aleatoriamente
+    return imageUrls[randomIndex];
+  }
 
   void toggleBookmark() {
     setState(() {
@@ -30,6 +51,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentImageUrl.isEmpty) {
+      // Se a URL atual estiver vazia, defina a primeira imagem aleatória
+      currentImageUrl = getRandomImageUrl();
+    }
     return Scaffold(
       appBar: AppBar(
         title: RichText(
@@ -58,12 +83,11 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-                  ),
+                  // Use a URL atual para a imagem
+                  image: NetworkImage(currentImageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -201,20 +225,78 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 20),
                   CarouselSlider(
                     items: [
-                      // Aqui vão os seus widgets do carrossel
-                      Container(color: Colors.red),
-                      Container(color: Colors.blue),
-                      Container(color: Colors.green),
-                      Container(color: Colors.yellow),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilmeEminem()),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://upload.wikimedia.org/wikipedia/pt/4/44/The_Super_Mario_Bros._Movie_poster.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ],
                     options: CarouselOptions(
                       height: 200.0,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
+                      enlargeCenterPage: false,
+                      enableInfiniteScroll: true,
                       initialPage: 0,
-                      viewportFraction: 0.8,
+                      viewportFraction: 0.3,
+                      aspectRatio: 2.0,
                     ),
                   ),
+                  SizedBox(height: 40),
                   Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -280,18 +362,66 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 20),
                   CarouselSlider(
                     items: [
-                      // Aqui vão os seus widgets do carrossel
-                      Container(color: Colors.red),
-                      Container(color: Colors.blue),
-                      Container(color: Colors.green),
-                      Container(color: Colors.yellow),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://upload.wikimedia.org/wikipedia/pt/f/f6/Dark_%28s%C3%A9rie%29.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://m.media-amazon.com/images/M/MV5BM2EwMmRhMmUtMzBmMS00ZDQ3LTg4OGEtNjlkODk3ZTMxMmJlXkEyXkFqcGdeQXVyMjM5ODk1NDU@._V1_FMjpg_UX1000_.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ],
                     options: CarouselOptions(
                       height: 200.0,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
+                      enlargeCenterPage: false,
+                      enableInfiniteScroll: true,
                       initialPage: 0,
-                      viewportFraction: 0.8,
+                      viewportFraction: 0.3,
+                      aspectRatio: 2.0,
                     ),
                   ),
                 ],
