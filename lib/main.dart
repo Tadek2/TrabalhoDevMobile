@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
 import 'dart:math';
 
+import 'assistirSeries.dart';
 import 'filmeEminem.dart';
 
 void main() {
@@ -27,6 +28,12 @@ class _HomePageState extends State<HomePage> {
   String currentImageUrl = '';
   bool isBookmarked = false;
 
+  bool isFilmesLancamentosActive = true;
+  bool isFilmesPopularesActive = false;
+
+  bool isSeriesLancamentosActive = true;
+  bool isSeriesPopularesActive = false;
+
   List<String> imageUrls = [
     'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
     'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
@@ -42,6 +49,34 @@ class _HomePageState extends State<HomePage> {
     int randomIndex = Random().nextInt(imageUrls.length);
     // Retorne a URL da imagem correspondente ao índice gerado aleatoriamente
     return imageUrls[randomIndex];
+  }
+
+  List<String> originalMovieImageUrls = [
+    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
+    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
+    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
+    // Adicione mais URLs conforme necessário
+  ];
+
+  List<String> popularMoviesImageUrls = [
+    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BYzhiNDkyNzktNTZmYS00ZTBkLTk2MDAtM2U0YjU1MzgxZjgzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
+    'https://image.tmdb.org/t/p/w500/cUgYrz4twiJ3QgVGpRfey984NIB.jpg',
+    // Adicione mais URLs conforme necessário
+  ];
+
+  void updateMoviesCarousel(bool isPopulares) {
+    setState(() {
+      if (isPopulares) {
+        // Atualize a lista de imagens com os filmes populares
+        imageUrls = popularMoviesImageUrls;
+      } else {
+        // Reinicie a lista de imagens com os filmes originais
+        imageUrls = originalMovieImageUrls;
+      }
+    });
   }
 
   void toggleBookmark() {
@@ -125,35 +160,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        toggleBookmark();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isBookmarked ? Color(0xFF443021) : Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      icon: Icon(
-                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        isBookmarked ? 'Remover Ver Depois' : 'Ver Depois',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -181,10 +187,17 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Ação para o botão "Lançamentos"
+                            setState(() {
+                              isFilmesLancamentosActive = true;
+                              isFilmesPopularesActive = false;
+                              // Atualize o CarouselSlider para exibir filmes de lançamento
+                              updateMoviesCarousel(false);
+                            });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFF8A00),
+                            backgroundColor: isFilmesLancamentosActive
+                                ? Color(0xFFFF8A00)
+                                : Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -192,7 +205,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             'Lançamentos',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: isFilmesLancamentosActive
+                                  ? Colors.black
+                                  : Colors.white,
                               fontSize: 16,
                             ),
                           ),
@@ -204,10 +219,17 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Ação para o botão "Populares"
+                            setState(() {
+                              isFilmesLancamentosActive = false;
+                              isFilmesPopularesActive = true;
+                              // Atualize o CarouselSlider para exibir filmes populares
+                              updateMoviesCarousel(true);
+                            });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
+                            backgroundColor: isFilmesPopularesActive
+                                ? Color(0xFFFF8A00)
+                                : Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -225,14 +247,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 20),
                   CarouselSlider(
-                    items: [
-                      GestureDetector(
+                    items: imageUrls.map((imageUrl) {
+                      return GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FilmeEminem()),
-                          );
+                          // Ação quando a imagem é pressionada
                         },
                         child: Container(
                           width: 120,
@@ -242,52 +260,13 @@ class _HomePageState extends State<HomePage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
+                              imageUrl,
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://upload.wikimedia.org/wikipedia/pt/4/44/The_Super_Mario_Bros._Movie_poster.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
+                      );
+                    }).toList(),
                     options: CarouselOptions(
                       height: 200.0,
                       enlargeCenterPage: false,
@@ -318,10 +297,15 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Ação para o botão "Lançamentos"
+                            setState(() {
+                              isSeriesLancamentosActive = true;
+                              isSeriesPopularesActive = false;
+                            });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFF8A00),
+                            backgroundColor: isSeriesLancamentosActive
+                                ? Color(0xFFFF8A00)
+                                : Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -329,7 +313,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             'Lançamentos',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: isSeriesLancamentosActive
+                                  ? Colors.black
+                                  : Colors.white,
                               fontSize: 16,
                             ),
                           ),
@@ -341,10 +327,15 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Ação para o botão "Populares"
+                            setState(() {
+                              isSeriesLancamentosActive = false;
+                              isSeriesPopularesActive = true;
+                            });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
+                            backgroundColor: isSeriesPopularesActive
+                                ? Color(0xFFFF8A00)
+                                : Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -352,7 +343,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             'Populares',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: isSeriesPopularesActive
+                                  ? Colors.black
+                                  : Colors.white,
                               fontSize: 16,
                             ),
                           ),
@@ -431,7 +424,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -448,19 +441,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Filmes'),
               onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AssistirFilmes()),
-                          );
-                        },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AssistirFilmes()),
+                );
+              },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Series'),
               onTap: () {
-                // Funcionalidade para o Item 2
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AssistirSeries()),
+                );
               },
             ),
             // Adicione mais itens do menu conforme necessário
