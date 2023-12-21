@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_application_1/assistirFilmes.dart';
 import 'dart:math';
 
 import 'filmeEminem.dart';
@@ -449,8 +450,12 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Item 1'),
               onTap: () {
-                // Funcionalidade para o Item 1
-              },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AssistirFilmes()),
+                          );
+                        },
             ),
             ListTile(
               title: Text('Item 2'),
