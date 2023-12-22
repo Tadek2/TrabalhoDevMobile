@@ -1,31 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
-import 'package:flutter_application_1/serieSaul.dart';
+import 'package:flutter_application_1/assistirSeries.dart';
+import 'package:flutter_application_1/main.dart';
 import 'dart:math';
 
-import 'assistirSeries.dart';
-import 'filmeAvatar.dart';
+import 'package:flutter_application_1/serieSaul.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class FilmeAvatar extends StatefulWidget {
+  final String imageUrl; // Define imageUrl as a parameter of the class
 
-class MyApp extends StatelessWidget {
+  // Constructor that initializes the imageUrl parameter
+  FilmeAvatar({required this.imageUrl});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
+  _FilmeAvatarState createState() => _FilmeAvatarState();
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class _FilmeAvatarState extends State<FilmeAvatar> {
   String currentImageUrl = '';
 
   bool isFilmesLancamentosActive = true;
@@ -119,6 +111,52 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showInfoBottomSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor:
+              0.35, // Reduzindo a altura do BottomSheet para 30% da tela
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 55),
+            child: Column(
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Additional Information',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Insert your additional information here...',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        // Add more widgets for additional information
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    height:
+                        25), // Espaço entre o final do conteúdo e o final da tela
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentImageUrl.isEmpty) {
@@ -127,6 +165,12 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          },
+        ),
         title: RichText(
           text: TextSpan(
             children: [
@@ -153,47 +197,111 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.6,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  // Use a URL atual para a imagem
-                  image: NetworkImage(currentImageUrl),
+                  image: NetworkImage(widget.imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
-                  SizedBox(height: 20),
-                  SizedBox(
-                    width: 220,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        // Ação para o botão "Assistir"
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFF8A00),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20),
+                      // Other widgets or content
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Space for 'Ver depois' button
+                        SizedBox(width: 24),
+                        Column(
+                          children: [
+                            SizedBox(height: 4),
+                            Icon(
+                              Icons.add,
+                              color: Colors.orange,
+                              size: 24,
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Ver depois',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      icon: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        'Assistir',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        SizedBox(
+                            width:
+                                40), // Space between 'Ver depois' and 'Play' button
+                        SizedBox(
+                          width: 130,
+                          height: 50,
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              // Ação para o botão "Assistir"
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFFF8A00),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.play_arrow,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              'Assistir',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                            width:
+                                40), // Space between 'Play' and 'Info' button
+                        Column(
+                          children: [
+                            SizedBox(height: 4),
+                            GestureDetector(
+                              onTap: () {
+                                // Call the method to show the bottom sheet
+                                _showInfoBottomSheet();
+                              },
+                              child: Icon(
+                                Icons.info,
+                                color: Colors.orange,
+                                size: 24,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Info',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Space for 'Info' button
+                        SizedBox(width: 24),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 16),
                 ],
               ),
             ),
@@ -204,7 +312,7 @@ class _HomePageState extends State<HomePage> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Assistir Filmes',
+                      'Filmes Recomendados',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 24,
@@ -215,69 +323,6 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 190,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isFilmesLancamentosActive = true;
-                              isFilmesPopularesActive = false;
-                              // Atualize o CarouselSlider para exibir filmes de lançamento
-                              updateMoviesCarousel(false);
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isFilmesLancamentosActive
-                                ? Color(0xFFFF8A00)
-                                : Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: Text(
-                            'Lançamentos',
-                            style: TextStyle(
-                              color: isFilmesLancamentosActive
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 190,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isFilmesLancamentosActive = false;
-                              isFilmesPopularesActive = true;
-                              // Atualize o CarouselSlider para exibir filmes populares
-                              updateMoviesCarousel(true);
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isFilmesPopularesActive
-                                ? Color(0xFFFF8A00)
-                                : Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: Text(
-                            'Populares',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                   SizedBox(height: 20),
                   CarouselSlider(
@@ -293,128 +338,6 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       FilmeAvatar(imageUrl: imageUrl)),
-                            );
-                          }
-                        },
-                        child: Container(
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    options: CarouselOptions(
-                      height: 200.0,
-                      enlargeCenterPage: false,
-                      enableInfiniteScroll: true,
-                      initialPage: 0,
-                      viewportFraction: 0.3,
-                      aspectRatio: 2.0,
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Assistir Series',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 190,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isSeriesLancamentosActive = true;
-                              isSeriesPopularesActive = false;
-                              // Update the CarouselSlider to display new releases for series
-                              updateSeriesCarousel(false);
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isSeriesLancamentosActive
-                                ? Color(0xFFFF8A00)
-                                : Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: Text(
-                            'Lançamentos',
-                            style: TextStyle(
-                              color: isSeriesLancamentosActive
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 190,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isSeriesLancamentosActive = false;
-                              isSeriesPopularesActive = true;
-                              // Update the CarouselSlider to display popular series
-                              updateSeriesCarousel(true);
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isSeriesPopularesActive
-                                ? Color(0xFFFF8A00)
-                                : Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: Text(
-                            'Populares',
-                            style: TextStyle(
-                              color: isSeriesPopularesActive
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  CarouselSlider(
-                    items: originalSerieImageUrls.map((imageUrl) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Verifica a URL da imagem e navega para a página correspondente
-                          int index = originalSerieImageUrls.indexOf(imageUrl);
-                          if (index != -1) {
-                            // Navega para a página SerieSaul e passa a URL da imagem correspondente
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      SerieSaul(imageUrl: imageUrl)),
                             );
                           }
                         },

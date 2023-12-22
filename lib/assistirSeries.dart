@@ -29,6 +29,12 @@ class AssistirSeries extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          },
+        ),
         title: RichText(
           text: TextSpan(
             children: [
@@ -49,13 +55,6 @@ class AssistirSeries extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // Close the current screen
-            Navigator.of(context).pop(); // Navigate back
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
