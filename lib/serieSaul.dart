@@ -2,10 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
 import 'package:flutter_application_1/assistirSeries.dart';
+import 'package:flutter_application_1/seriesComponents.dart';
 import 'package:flutter_application_1/main.dart';
 import 'dart:math';
 
 import 'package:flutter_application_1/filmeAvatar.dart';
+import 'package:flutter_application_1/verDepois.dart';
 
 class SerieSaul extends StatefulWidget {
   final String imageUrl;
@@ -17,6 +19,14 @@ class SerieSaul extends StatefulWidget {
 }
 
 class _SerieSaulState extends State<SerieSaul> {
+  bool isAdded = false;
+
+  void toggleIcon() {
+    setState(() {
+      isAdded = !isAdded;
+    });
+  }
+
   String currentImageUrl = '';
 
   bool isFilmesLancamentosActive = true;
@@ -25,54 +35,12 @@ class _SerieSaulState extends State<SerieSaul> {
   bool isSeriesLancamentosActive = true;
   bool isSeriesPopularesActive = false;
 
-  List<String> imageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
-    // Adicione mais URLs conforme necessário
-  ];
-
   String getRandomImageUrl() {
     // Gere um índice aleatório com base no comprimento da lista de URLs
     int randomIndex = Random().nextInt(imageUrls.length);
     // Retorne a URL da imagem correspondente ao índice gerado aleatoriamente
     return imageUrls[randomIndex];
   }
-
-  List<String> originalMovieImageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
-    // Adicione mais URLs conforme necessário
-  ];
-
-  List<String> popularMoviesImageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYzhiNDkyNzktNTZmYS00ZTBkLTk2MDAtM2U0YjU1MzgxZjgzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-    'https://image.tmdb.org/t/p/w500/cUgYrz4twiJ3QgVGpRfey984NIB.jpg',
-    // Adicione mais URLs conforme necessário
-  ];
-
-  List<String> originalSerieImageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BZDA4YmE0OTYtMmRmNS00Mzk2LTlhM2MtNjk4NzBjZGE1MmIyXkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BODRiMmVkZDAtMDA0NS00ZjI2LWExMWQtYjZkMGY1MGY1ZDliXkEyXkFqcGdeQXVyMTU1ODM3NTA2._V1_FMjpg_UX1000_.jpg',
-    'https://occ-0-2794-2218.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABdDA92Vqwg98vILWMsRpfyLUQVAH9mfDp2EU5dythi4tp8KhgIvU8lYGiuJwvbkp9KLtqaHGcPC5uUMhR9vBMxvr4jsK.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg',
-    // Adicione mais URLs conforme necessário
-  ];
-
-  List<String> popularSerieImageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BM2EwMmRhMmUtMzBmMS00ZDQ3LTg4OGEtNjlkODk3ZTMxMmJlXkEyXkFqcGdeQXVyMjM5ODk1NDU@._V1_FMjpg_UX1000_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BMWYxNGJhNmQtZmI4OS00NjQ1LThmNzAtY2JkYmQ5NjliNDgwXkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
-    // Adicione mais URLs conforme necessário
-  ];
 
   void updateMoviesCarousel(bool isPopulares) {
     setState(() {
@@ -110,45 +78,90 @@ class _SerieSaulState extends State<SerieSaul> {
     });
   }
 
+  List<Widget> generateStarIcons(int count) {
+    return List.generate(
+      count,
+      (index) => Icon(Icons.star),
+    );
+  }
+
   void _showInfoBottomSheet() {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor:
-              0.35, // Reduzindo a altura do BottomSheet para 30% da tela
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 55),
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Additional Information',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Insert your additional information here...',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        // Add more widgets for additional information
-                      ],
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.9, // Largura desejada
+          child: FractionallySizedBox(
+            heightFactor: 0.30,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      'Info',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                    height:
-                        25), // Espaço entre o final do conteúdo e o final da tela
-              ],
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '2018',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time),
+                          SizedBox(width: 5),
+                          Text(
+                            '50min',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '9.2',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '/10',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          ...generateStarIcons(4),
+                          Icon(Icons.star_half),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam turpis eget lectus aliquet, eget eleifend ipsum lobortis. Phasellus auctor tristique eros at rhoncus.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 25),
+                ],
+              ),
             ),
           ),
         );
@@ -222,11 +235,22 @@ class _SerieSaulState extends State<SerieSaul> {
                         SizedBox(width: 24),
                         Column(
                           children: [
-                            SizedBox(height: 4),
-                            Icon(
-                              Icons.add,
-                              color: Colors.orange,
-                              size: 24,
+                            GestureDetector(
+                              onTap: () {
+                                // Call the function to toggle the icon
+                                toggleIcon();
+                              },
+                              child: isAdded
+                                  ? Icon(
+                                      Icons.check,
+                                      color: Colors.orange,
+                                      size: 24,
+                                    )
+                                  : Icon(
+                                      Icons.add,
+                                      color: Colors.orange,
+                                      size: 24,
+                                    ),
                             ),
                             SizedBox(height: 2),
                             Text(
@@ -319,7 +343,6 @@ class _SerieSaulState extends State<SerieSaul> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
@@ -328,20 +351,24 @@ class _SerieSaulState extends State<SerieSaul> {
                     items: originalSerieImageUrls.map((imageUrl) {
                       return GestureDetector(
                         onTap: () {
-                          // Verifica a URL da imagem e navega para a página correspondente
                           int index = originalSerieImageUrls.indexOf(imageUrl);
                           if (index != -1) {
-                            // Navega para a página SerieSaul e passa a URL da imagem correspondente
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      SerieSaul(imageUrl: imageUrl)),
-                            );
+                                builder: (context) =>
+                                    SerieSaul(imageUrl: imageUrl),
+                              ),
+                            ).then((value) {
+                              setState(() {
+                                // Update the current image URL if it has changed
+                                currentImageUrl = value ?? currentImageUrl;
+                              });
+                            });
                           }
                         },
                         child: Container(
-                          width: 120,
+                          width: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -401,6 +428,15 @@ class _SerieSaulState extends State<SerieSaul> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AssistirSeries()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Ver Depois'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerDepois()),
                 );
               },
             ),

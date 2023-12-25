@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
+import 'package:flutter_application_1/verDepois.dart';
 
 // ignore: must_be_immutable
 class AssistirSeries extends StatelessWidget {
@@ -118,7 +119,6 @@ class AssistirSeries extends StatelessWidget {
             SizedBox(height: 10),
             Expanded(
               child: Container(
-                margin: EdgeInsets.all(10),
                 child: Wrap(
                   spacing: 20.0,
                   runSpacing: 10.0,
@@ -126,7 +126,7 @@ class AssistirSeries extends StatelessWidget {
                   children: List.generate(
                     imageUrls.length,
                     (index) => SizedBox(
-                      width: 115,
+                      width: 110,
                       height: 150,
                       child: Container(
                         decoration: BoxDecoration(
@@ -265,6 +265,15 @@ class AssistirSeries extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AssistirSeries()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Ver Depois'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerDepois()),
                 );
               },
             ),

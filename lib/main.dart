@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
 import 'package:flutter_application_1/serieSaul.dart';
+import 'package:flutter_application_1/verDepois.dart';
+import 'package:flutter_application_1/videoPlayer.dart';
 import 'dart:math';
 
 import 'assistirSeries.dart';
@@ -217,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 190,
+                        width: 180,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
@@ -249,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(width: 10),
                       SizedBox(
-                        width: 190,
+                        width: 180,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
@@ -291,13 +293,14 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      FilmeAvatar(imageUrl: imageUrl)),
+                                  builder: (context) => FilmeAvatar(
+                                        imageUrl: imageUrl,
+                                      )),
                             );
                           }
                         },
                         child: Container(
-                          width: 120,
+                          width: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -337,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 190,
+                        width: 180,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
@@ -369,7 +372,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(width: 10),
                       SizedBox(
-                        width: 190,
+                        width: 180,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
@@ -419,7 +422,7 @@ class _HomePageState extends State<HomePage> {
                           }
                         },
                         child: Container(
-                          width: 120,
+                          width: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -479,6 +482,15 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AssistirSeries()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Ver Depois'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerDepois()),
                 );
               },
             ),
