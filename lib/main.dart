@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/assistirFilmes.dart';
 import 'package:flutter_application_1/serieSaul.dart';
 import 'package:flutter_application_1/verDepois.dart';
-import 'package:flutter_application_1/videoPlayer.dart';
 import 'dart:math';
 
 import 'assistirSeries.dart';
@@ -43,13 +42,11 @@ class _HomePageState extends State<HomePage> {
     'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
     'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
     'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
-    // Adicione mais URLs conforme necessário
   ];
 
   String getRandomImageUrl() {
-    // Gere um índice aleatório com base no comprimento da lista de URLs
     int randomIndex = Random().nextInt(imageUrls.length);
-    // Retorne a URL da imagem correspondente ao índice gerado aleatoriamente
+
     return imageUrls[randomIndex];
   }
 
@@ -58,7 +55,8 @@ class _HomePageState extends State<HomePage> {
     'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
     'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
     'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
-    // Adicione mais URLs conforme necessário
+    'https://m.media-amazon.com/images/S/pv-target-images/1ee8a6ef606669f6f55cfd0ae9e1c3d4ee515d9e82b1deb44eabe6d62ba802d5.jpg',
+    'https://upload.wikimedia.org/wikipedia/pt/thumb/9/95/Napoleon_poster.jpg/225px-Napoleon_poster.jpg',
   ];
 
   List<String> popularMoviesImageUrls = [
@@ -66,7 +64,8 @@ class _HomePageState extends State<HomePage> {
     'https://m.media-amazon.com/images/M/MV5BYzhiNDkyNzktNTZmYS00ZTBkLTk2MDAtM2U0YjU1MzgxZjgzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg',
     'https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
     'https://image.tmdb.org/t/p/w500/cUgYrz4twiJ3QgVGpRfey984NIB.jpg',
-    // Adicione mais URLs conforme necessário
+    'https://m.media-amazon.com/images/M/MV5BNzcxNmIwMDYtNGQ4My00M2UxLWJlNTctM2Y2Y2FlYTE1NzAwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg',
+    'https://m.media-amazon.com/images/S/pv-target-images/ae8dddd0abc2fac14052f29bc2ae15ddd86374c0d3bd017171ee6473b8933b29.jpg',
   ];
 
   List<String> originalSerieImageUrls = [
@@ -74,7 +73,8 @@ class _HomePageState extends State<HomePage> {
     'https://m.media-amazon.com/images/M/MV5BODRiMmVkZDAtMDA0NS00ZjI2LWExMWQtYjZkMGY1MGY1ZDliXkEyXkFqcGdeQXVyMTU1ODM3NTA2._V1_FMjpg_UX1000_.jpg',
     'https://occ-0-2794-2218.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABdDA92Vqwg98vILWMsRpfyLUQVAH9mfDp2EU5dythi4tp8KhgIvU8lYGiuJwvbkp9KLtqaHGcPC5uUMhR9vBMxvr4jsK.jpg',
     'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg',
-    // Adicione mais URLs conforme necessário
+    'https://m.media-amazon.com/images/M/MV5BMDQ2YjVmYTktMWM2ZS00MzM5LWE4MDgtNWE0ZTJjNmU5NjJlXkEyXkFqcGdeQXVyMTA3MzQ4MTc0._V1_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg',
   ];
 
   List<String> popularSerieImageUrls = [
@@ -82,22 +82,22 @@ class _HomePageState extends State<HomePage> {
     'https://m.media-amazon.com/images/M/MV5BMWYxNGJhNmQtZmI4OS00NjQ1LThmNzAtY2JkYmQ5NjliNDgwXkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg',
     'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
     'https://upload.wikimedia.org/wikipedia/pt/2/29/Stranger_Things_Temporada_1_Poster.jpg',
-    // Adicione mais URLs conforme necessário
+    'https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BNzI5MjUyYTEtMTljZC00NGI5LWFhNWYtYjY0ZTQ5YmEzMWRjXkEyXkFqcGdeQXVyMTY3MDE5MDY1._V1_FMjpg_UX1000_.jpg',
   ];
 
   void updateMoviesCarousel(bool isPopulares) {
     setState(() {
       if (isPopulares) {
-        // Update the list of images with popular movies
         originalMovieImageUrls = popularMoviesImageUrls;
       } else {
-        // Reset the list of images to the original movies list
         originalMovieImageUrls = [
           'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
           'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
           'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
           'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
-          // Add more URLs as needed
+          'https://m.media-amazon.com/images/S/pv-target-images/1ee8a6ef606669f6f55cfd0ae9e1c3d4ee515d9e82b1deb44eabe6d62ba802d5.jpg',
+          'https://upload.wikimedia.org/wikipedia/pt/thumb/9/95/Napoleon_poster.jpg/225px-Napoleon_poster.jpg',
         ];
       }
     });
@@ -106,29 +106,61 @@ class _HomePageState extends State<HomePage> {
   void updateSeriesCarousel(bool isPopulares) {
     setState(() {
       if (isPopulares) {
-        // Update the list of images with popular series
         originalSerieImageUrls = popularSerieImageUrls;
       } else {
-        // Reset the list of images to the original series list
         originalSerieImageUrls = [
           'https://m.media-amazon.com/images/M/MV5BZDA4YmE0OTYtMmRmNS00Mzk2LTlhM2MtNjk4NzBjZGE1MmIyXkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
           'https://m.media-amazon.com/images/M/MV5BODRiMmVkZDAtMDA0NS00ZjI2LWExMWQtYjZkMGY1MGY1ZDliXkEyXkFqcGdeQXVyMTU1ODM3NTA2._V1_FMjpg_UX1000_.jpg',
           'https://occ-0-2794-2218.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABdDA92Vqwg98vILWMsRpfyLUQVAH9mfDp2EU5dythi4tp8KhgIvU8lYGiuJwvbkp9KLtqaHGcPC5uUMhR9vBMxvr4jsK.jpg',
-          'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg',
-          // Add more URLs as needed
+          'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg',
+          'https://m.media-amazon.com/images/M/MV5BMDQ2YjVmYTktMWM2ZS00MzM5LWE4MDgtNWE0ZTJjNmU5NjJlXkEyXkFqcGdeQXVyMTA3MzQ4MTc0._V1_.jpg',
+          'https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg',
         ];
       }
     });
   }
 
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index, BuildContext context) {
+    if (index != _selectedIndex) {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+
+          break;
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirFilmes()),
+          );
+          break;
+        case 2:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirSeries()),
+          );
+          break;
+        case 3:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VerDepois()),
+          );
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentImageUrl.isEmpty) {
-      // Se a URL atual estiver vazia, defina a primeira imagem aleatória
       currentImageUrl = getRandomImageUrl();
     }
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
         title: RichText(
           text: TextSpan(
             children: [
@@ -137,12 +169,14 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   fontSize: 24,
                   fontStyle: FontStyle.italic,
+                  color: Colors.white,
                 ),
               ),
               TextSpan(
                 text: '.tv',
                 style: TextStyle(
                   fontSize: 10,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -158,7 +192,6 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  // Use a URL atual para a imagem
                   image: NetworkImage(currentImageUrl),
                   fit: BoxFit.cover,
                 ),
@@ -171,9 +204,7 @@ class _HomePageState extends State<HomePage> {
                     width: 220,
                     height: 50,
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        // Ação para o botão "Assistir"
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFFF8A00),
                         shape: RoundedRectangleBorder(
@@ -226,7 +257,7 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               isFilmesLancamentosActive = true;
                               isFilmesPopularesActive = false;
-                              // Atualize o CarouselSlider para exibir filmes de lançamento
+
                               updateMoviesCarousel(false);
                             });
                           },
@@ -258,7 +289,7 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               isFilmesLancamentosActive = false;
                               isFilmesPopularesActive = true;
-                              // Atualize o CarouselSlider para exibir filmes populares
+
                               updateMoviesCarousel(true);
                             });
                           },
@@ -286,16 +317,15 @@ class _HomePageState extends State<HomePage> {
                     items: originalMovieImageUrls.map((imageUrl) {
                       return GestureDetector(
                         onTap: () {
-                          // Verifica a URL da imagem e navega para a página correspondente
                           int index = originalMovieImageUrls.indexOf(imageUrl);
                           if (index != -1) {
-                            // Navega para a página SerieSaul e passa a URL da imagem correspondente
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FilmeAvatar(
-                                        imageUrl: imageUrl,
-                                      )),
+                                builder: (context) => FilmeAvatar(
+                                  imageUrl: imageUrl,
+                                ),
+                              ),
                             );
                           }
                         },
@@ -347,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               isSeriesLancamentosActive = true;
                               isSeriesPopularesActive = false;
-                              // Update the CarouselSlider to display new releases for series
+
                               updateSeriesCarousel(false);
                             });
                           },
@@ -379,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               isSeriesLancamentosActive = false;
                               isSeriesPopularesActive = true;
-                              // Update the CarouselSlider to display popular series
+
                               updateSeriesCarousel(true);
                             });
                           },
@@ -409,10 +439,8 @@ class _HomePageState extends State<HomePage> {
                     items: originalSerieImageUrls.map((imageUrl) {
                       return GestureDetector(
                         onTap: () {
-                          // Verifica a URL da imagem e navega para a página correspondente
                           int index = originalSerieImageUrls.indexOf(imageUrl);
                           if (index != -1) {
-                            // Navega para a página SerieSaul e passa a URL da imagem correspondente
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -451,50 +479,32 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.grey.shade900,
+        ),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey.shade600,
+          currentIndex: _selectedIndex,
+          onTap: (index) => _onItemTapped(index, context),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Início',
             ),
-            ListTile(
-              title: Text('Filmes'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirFilmes()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: 'Filmes',
             ),
-            ListTile(
-              title: Text('Series'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirSeries()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.tv),
+              label: 'Séries',
             ),
-            ListTile(
-              title: Text('Ver Depois'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VerDepois()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_box),
+              label: 'Ver Depois',
             ),
-            // Adicione mais itens do menu conforme necessário
           ],
         ),
       ),

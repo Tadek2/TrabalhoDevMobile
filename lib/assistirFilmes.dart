@@ -1,42 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_application_1/assistirSeries.dart';
+import 'package:flutter_application_1/filmeAvatar.dart';
 import 'package:flutter_application_1/verDepois.dart';
+import 'package:flutter_application_1/filmesComponents.dart';
+import 'filmesComponents.dart';
 
-import 'assistirSeries.dart';
+class AssistirFilmes extends StatefulWidget {
+  @override
+  _AssistirFilmesState createState() => _AssistirFilmesState();
+}
 
-// ignore: must_be_immutable
-class AssistirFilmes extends StatelessWidget {
+class _AssistirFilmesState extends State<AssistirFilmes> {
   List<String> imageUrls = [
-    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
+    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
     'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
     'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/4/44/The_Super_Mario_Bros._Movie_poster.jpg',
-    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/4/44/The_Super_Mario_Bros._Movie_poster.jpg',
-    'https://m.media-amazon.com/images/M/MV5BZDE3NDZmMGUtZjhjOS00MmIyLTkyMzAtMzM4ZjNhZThiY2ViXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_.jpg',
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
-    'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
-    // ... (mesmas URLs)
+    'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
+    'https://m.media-amazon.com/images/S/pv-target-images/1ee8a6ef606669f6f55cfd0ae9e1c3d4ee515d9e82b1deb44eabe6d62ba802d5.jpg',
+    'https://upload.wikimedia.org/wikipedia/pt/thumb/9/95/Napoleon_poster.jpg/225px-Napoleon_poster.jpg',
   ];
 
-  AssistirFilmes({Key? key}) : super(key: key);
+  void updateSeriesCarousel(bool isPopulares) {
+    setState(() {
+      if (isPopulares) {
+        imageUrls = originalMovieImageUrls;
+      } else {
+        imageUrls = popularMoviesImageUrls;
+      }
+    });
+  }
+
+  bool isFilmesLancamentosActive = true;
+  bool isFilmesPopularesActive = false;
+
+  int _selectedIndex = 1;
+
+  void _onItemTapped(int index, BuildContext context) {
+    if (index != _selectedIndex) {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+
+          break;
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirFilmes()),
+          );
+          break;
+        case 2:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirSeries()),
+          );
+          break;
+        case 3:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VerDepois()),
+          );
+          break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.popUntil(context, ModalRoute.withName('/'));
-          },
-        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
         title: RichText(
           text: TextSpan(
             children: [
@@ -45,12 +79,14 @@ class AssistirFilmes extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontStyle: FontStyle.italic,
+                  color: Colors.white,
                 ),
               ),
               TextSpan(
                 text: '.tv',
                 style: TextStyle(
                   fontSize: 10,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -58,227 +94,177 @@ class AssistirFilmes extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Assistir Filmes',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Assistir Filmes',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Lançamentos"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFF8A00),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 180,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        updateSeriesCarousel(true);
+                        setState(() {
+                          isFilmesLancamentosActive = true;
+                          isFilmesPopularesActive = false;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isFilmesLancamentosActive
+                            ? Color(0xFFFF8A00)
+                            : Colors.blueGrey.shade900,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Text(
+                        'Lançamentos',
+                        style: TextStyle(
+                          color: isFilmesLancamentosActive
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
-                  child: Text(
-                    'Lançamentos',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+                  SizedBox(width: 10),
+                  SizedBox(
+                    width: 180,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        updateSeriesCarousel(false);
+                        setState(() {
+                          isFilmesLancamentosActive = false;
+                          isFilmesPopularesActive = true;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isFilmesPopularesActive
+                            ? Color(0xFFFF8A00)
+                            : Colors.blueGrey.shade900,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Text(
+                        'Populares',
+                        style: TextStyle(
+                          color: isFilmesPopularesActive
+                              ? Colors.black
+                              : Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Populares"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  child: Text(
-                    'Populares',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: Container(
-                child: Wrap(
-                  spacing: 20.0,
-                  runSpacing: 10.0,
-                  alignment: WrapAlignment.center,
-                  children: List.generate(
-                    imageUrls.length,
-                    (index) => SizedBox(
+                ],
+              ),
+              SizedBox(height: 30),
+              Wrap(
+                spacing: 20.0,
+                runSpacing: 20.0,
+                alignment: WrapAlignment.center,
+                children: List.generate(
+                  imageUrls.length,
+                  (index) => GestureDetector(
+                    onTap: () {
+                      int imageIndex =
+                          originalMovieImageUrls.indexOf(imageUrls[index]);
+                      if (imageIndex != -1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FilmeAvatar(
+                              imageUrl: imageUrls[imageIndex],
+                            ),
+                          ),
+                        );
+                      } else {
+                        imageIndex =
+                            popularMoviesImageUrls.indexOf(imageUrls[index]);
+                        if (imageIndex != -1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FilmeAvatar(
+                                imageUrl: imageUrls[imageIndex],
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: SizedBox(
                       width: 110,
                       height: 150,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         alignment: Alignment.center,
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrls[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            imageUrls[index],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Breadcrumb 1"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    minimumSize: Size(24, 24),
-                  ),
-                  child: Text(
-                    '1',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Breadcrumb 2"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    minimumSize: Size(24, 24),
-                  ),
-                  child: Text(
-                    '2',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Breadcrumb 3"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    minimumSize: Size(24, 24),
-                  ),
-                  child: Text(
-                    '3',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Ação para o botão "Breadcrumb 4"
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    minimumSize: Size(24, 24),
-                  ),
-                  child: Text(
-                    '4',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.grey.shade900,
+        ),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey.shade600,
+          currentIndex: _selectedIndex,
+          onTap: (index) => _onItemTapped(index, context),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Início',
             ),
-            ListTile(
-              title: Text('Filmes'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirFilmes()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: 'Filmes',
             ),
-            ListTile(
-              title: Text('Series'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirSeries()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.tv),
+              label: 'Séries',
             ),
-            ListTile(
-              title: Text('Ver Depois'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VerDepois()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_box),
+              label: 'Ver Depois',
             ),
-            // Adicione mais itens do menu conforme necessário
           ],
         ),
       ),

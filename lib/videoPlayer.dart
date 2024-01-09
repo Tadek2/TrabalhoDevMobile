@@ -22,7 +22,7 @@ class _LocalVideoPlayerState extends State<LocalVideoPlayer> {
 
   Future<void> _initializeVideoPlayer() async {
     _controller = VideoPlayerController.asset(
-      '../videos/my_video.mp4', // Replace with your video file path
+      '../videos/topGun.mp4',
     );
     await _controller.initialize();
     _chewieController = ChewieController(
@@ -30,7 +30,7 @@ class _LocalVideoPlayerState extends State<LocalVideoPlayer> {
       autoPlay: true,
       looping: true,
       allowFullScreen: true,
-      aspectRatio: 16 / 9, // Adjust aspect ratio as needed
+      aspectRatio: 16 / 9,
       customControls: const CupertinoControls(
         backgroundColor: Colors.blue,
         iconColor: Colors.white,
@@ -38,8 +38,6 @@ class _LocalVideoPlayerState extends State<LocalVideoPlayer> {
     );
     setState(() {});
   }
-
-  // Other methods like build(), dispose(), skipForward(), skipBackward(), etc.
 
   @override
   Widget build(BuildContext context) {

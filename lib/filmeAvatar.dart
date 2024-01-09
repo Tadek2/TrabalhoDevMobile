@@ -37,25 +37,21 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
   bool isSeriesPopularesActive = false;
 
   String getRandomImageUrl() {
-    // Gere um índice aleatório com base no comprimento da lista de URLs
     int randomIndex = Random().nextInt(imageUrls.length);
-    // Retorne a URL da imagem correspondente ao índice gerado aleatoriamente
+
     return imageUrls[randomIndex];
   }
 
   void updateMoviesCarousel(bool isPopulares) {
     setState(() {
       if (isPopulares) {
-        // Update the list of images with popular movies
         originalMovieImageUrls = popularMoviesImageUrls;
       } else {
-        // Reset the list of images to the original movies list
         originalMovieImageUrls = [
           'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg',
           'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
           'https://upload.wikimedia.org/wikipedia/pt/d/d2/Top_Gun_Maverick.jpg',
           'https://m.media-amazon.com/images/M/MV5BOTZmMmY2MzctMjU2Yy00YjJlLTk1NjAtY2U4MmMxOWZkZWY4XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg',
-          // Add more URLs as needed
         ];
       }
     });
@@ -64,16 +60,13 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
   void updateSeriesCarousel(bool isPopulares) {
     setState(() {
       if (isPopulares) {
-        // Update the list of images with popular series
         originalSerieImageUrls = popularSerieImageUrls;
       } else {
-        // Reset the list of images to the original series list
         originalSerieImageUrls = [
           'https://m.media-amazon.com/images/M/MV5BZDA4YmE0OTYtMmRmNS00Mzk2LTlhM2MtNjk4NzBjZGE1MmIyXkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg',
           'https://m.media-amazon.com/images/M/MV5BODRiMmVkZDAtMDA0NS00ZjI2LWExMWQtYjZkMGY1MGY1ZDliXkEyXkFqcGdeQXVyMTU1ODM3NTA2._V1_FMjpg_UX1000_.jpg',
           'https://occ-0-2794-2218.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABdDA92Vqwg98vILWMsRpfyLUQVAH9mfDp2EU5dythi4tp8KhgIvU8lYGiuJwvbkp9KLtqaHGcPC5uUMhR9vBMxvr4jsK.jpg',
           'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg',
-          // Add more URLs as needed
         ];
       }
     });
@@ -92,7 +85,7 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Container(
-          width: MediaQuery.of(context).size.width * 0.9, // Largura desejada
+          width: MediaQuery.of(context).size.width * 0.9,
           child: FractionallySizedBox(
             heightFactor: 0.30,
             child: Padding(
@@ -170,20 +163,55 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
     );
   }
 
+  int _selectedIndex = 1;
+
+  void _onItemTapped(int index, BuildContext context) {
+    if (index != _selectedIndex) {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+
+          break;
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirFilmes()),
+          );
+          break;
+        case 2:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AssistirSeries()),
+          );
+          break;
+        case 3:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VerDepois()),
+          );
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentImageUrl.isEmpty) {
-      // Se a URL atual estiver vazia, defina a primeira imagem aleatória
       currentImageUrl = getRandomImageUrl();
     }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.popUntil(context, ModalRoute.withName('/'));
           },
         ),
+        backgroundColor: Colors.black,
         title: RichText(
           text: TextSpan(
             children: [
@@ -192,12 +220,14 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                 style: TextStyle(
                   fontSize: 24,
                   fontStyle: FontStyle.italic,
+                  color: Colors.white,
                 ),
               ),
               TextSpan(
                 text: '.tv',
                 style: TextStyle(
                   fontSize: 10,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -231,13 +261,11 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Space for 'Ver depois' button
                         SizedBox(width: 24),
                         Column(
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // Call the function to toggle the icon
                                 toggleIcon();
                               },
                               child: isAdded
@@ -262,16 +290,12 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                            width:
-                                40), // Space between 'Ver depois' and 'Play' button
+                        SizedBox(width: 40),
                         SizedBox(
                           width: 130,
                           height: 50,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              // Ação para o botão "Assistir"
-                              // For instance, navigate to VerDepois
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -299,15 +323,12 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                            width:
-                                40), // Space between 'Play' and 'Info' button
+                        SizedBox(width: 40),
                         Column(
                           children: [
                             SizedBox(height: 4),
                             GestureDetector(
                               onTap: () {
-                                // Call the method to show the bottom sheet
                                 _showInfoBottomSheet();
                               },
                               child: Icon(
@@ -326,7 +347,6 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                             ),
                           ],
                         ),
-                        // Space for 'Info' button
                         SizedBox(width: 24),
                       ],
                     ),
@@ -368,7 +388,6 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
                               ),
                             ).then((value) {
                               setState(() {
-                                // Update the current image URL if it has changed
                                 currentImageUrl = value ?? currentImageUrl;
                               });
                             });
@@ -404,50 +423,32 @@ class _FilmeAvatarState extends State<FilmeAvatar> {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.grey.shade900,
+        ),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey.shade600,
+          currentIndex: _selectedIndex,
+          onTap: (index) => _onItemTapped(index, context),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Início',
             ),
-            ListTile(
-              title: Text('Filmes'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirFilmes()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: 'Filmes',
             ),
-            ListTile(
-              title: Text('Series'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssistirSeries()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.tv),
+              label: 'Séries',
             ),
-            ListTile(
-              title: Text('Ver Depois'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VerDepois()),
-                );
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_box),
+              label: 'Ver Depois',
             ),
-            // Adicione mais itens do menu conforme necessário
           ],
         ),
       ),
